@@ -65,25 +65,19 @@ android:background="@color/white"
                 app:cornerRadius = "30dp"/>
 
             <TextView
-                android:id="@+id/loginRedirectText"
+                android:id="@+id/toSignup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:padding="8dp"
-                android:text=" Not Registered yet??"
+                android:text=" Not Registered yet?? Register Here"
                 android:textColor="@color/red"
                 android:textSize="18dp">
 
 
             </TextView>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" REGISTER HERE !"
-                android:background="@color/red"
-                android:id="@+id/toSignup"
-                ></Button>
+
 
 
 

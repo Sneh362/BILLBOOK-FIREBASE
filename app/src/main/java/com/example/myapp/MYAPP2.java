@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MYAPP2 extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class MYAPP2 extends AppCompatActivity {
     EditText password;
     EditText conPass;
     Button sign;
-    Button toLogin;
+    TextView toLogin;
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
@@ -32,7 +33,7 @@ public class MYAPP2 extends AppCompatActivity {
         password=(EditText) findViewById(R.id.signup_password);
         conPass=(EditText) findViewById(R.id.signup_conpass);
         sign=(Button) findViewById(R.id.signup_button);
-        toLogin=(Button) findViewById(R.id.toLogin);
+        toLogin= (TextView) findViewById(R.id.toLogin);
 
 
         toLogin.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Expenses">
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="102dp"
+            android:text="Expenses"
+            android:textAlignment="center"
+            android:textColor="@color/red"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="731dp"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/task_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                android:textSize="25dp"
+                android:text="Source" />
+
+            <EditText
+                android:id="@+id/expenseSource"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                android:textColorHint="#837E7E"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:inputType="textMultiLine"
+                android:textSize="20dp"
+                android:background="@drawable/box_text"
+                android:hint="Source of Expense."
+                android:paddingStart="10dp" />
+
+            <TextView
+                android:id="@+id/task_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                android:singleLine="true"
+
+                android:textSize="25dp"
+                android:text="Amount" />
+
+            <EditText
+                android:id="@+id/expenseAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColorHint="#837E7E"
+                android:textColor="@color/black"
+                android:background="@drawable/box_text"
+                android:gravity="top|left"
+                android:hint="0.0"
+                android:inputType="number"
+                android:lines="6"
+                android:overScrollMode="always"
+
+                android:padding="10dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:textAlignment="gravity"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/absButton"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:layout_marginTop="15dp"
+                android:text="Add Expense" />
+
+        </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu" />
+</RelativeLayout>
