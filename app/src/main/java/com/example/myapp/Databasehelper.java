@@ -150,5 +150,21 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     }
 
+    public Nullable deleteExpenses(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("billbook", "id=?", new String[]{id});
+        return null;
+    }
+
+    public Nullable editExpenses(String id,Integer newAmount,String newDescription){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("money ", newAmount);
+        values.put("purpose", newDescription);
+        db.update("billbook", values, "id = ?", new String[] { id });
+        db.close();
+
+        return null;
+    }
 
 }

@@ -20,6 +20,10 @@ public class AddMoney extends AppCompatActivity {
     Button addButton;
     BottomNavigationView bottomNavigationView;
     @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_money);

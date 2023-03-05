@@ -20,7 +20,10 @@ public class Expenses extends AppCompatActivity {
     EditText money;
     Button addButtofn;
     BottomNavigationView bottomNavigationView;
-
+    @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

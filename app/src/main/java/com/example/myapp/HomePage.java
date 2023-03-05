@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,24 @@ public class HomePage extends AppCompatActivity {
     TextView total;
     BottomNavigationView bottomNavigationView;
     @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
+    public void updateTotal(){
+        Databasehelper db = new Databasehelper(this);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        String userId=sharedPreferences.getString("userId","");
+        Integer tota=db.getTotal(userId);
+        if(tota>=0) {
+            total.setTextColor(Color.parseColor("#10B104"));
+            total.setText(tota.toString());
+        }
+        else{
+            total.setTextColor(Color.parseColor("#B10404"));
+            total.setText(tota.toString());
+        }
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
@@ -38,24 +57,28 @@ public class HomePage extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MySharedPref",MODE_PRIVATE);
         String userId=sharedPreferences.getString("userId","");
-        Integer tota=db.getTotal(userId);
+        updateTotal();
         moneyList=db.getAllExpenses(userId);
-        moneyAdapter = new MyAdapter(moneyList, HomePage.this);
+        moneyAdapter = new MyAdapter(this,moneyList, HomePage.this);
         moneyRecyclerView.setAdapter(moneyAdapter);
-        if(tota>=0) {
-            total.setTextColor(Color.parseColor("#10B104"));
-            total.setText(tota.toString());
-        }
-        else{
-            total.setTextColor(Color.parseColor("#B10404"));
-            total.setText(tota.toString());
-        }
+        SwipeToDeleteAndEditCallback swipeCallback = new SwipeToDeleteAndEditCallback(moneyAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(moneyRecyclerView);
+//
+//        if(tota>=0) {
+//            total.setTextColor(Color.parseColor("#10B104"));
+//            total.setText(tota.toString());
+//        }
+//        else{
+//            total.setTextColor(Color.parseColor("#B10404"));
+//            total.setText(tota.toString());
+//        }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                total.setText(tota.toString());
-
+//                total.setText(tota.toString());
+            updateTotal();
                 switch (item.getItemId())
              {
                  case R.id.addMoney:
