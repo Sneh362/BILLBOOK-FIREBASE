@@ -54,16 +54,24 @@ android:background="@color/white"
                 android:drawableLeft="@drawable/twotone_password_24"
                 android:drawablePadding="8dp"/>
 
+<!--            <Button-->
+<!--                android:layout_width="340dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:text="LOGIN IN"-->
+<!--                android:id="@+id/login_button"-->
+<!--                android:textSize="18dp"-->
+<!--                android:background="@color/red"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                app:cornerRadius = "30dp"/>-->
             <Button
-                android:layout_width="340dp"
+                android:layout_width="300dp"
                 android:layout_height="70dp"
-                android:text="LOGIN IN"
-                android:id="@+id/login_button"
-                android:textSize="18dp"
-                android:background="@color/red"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
+                android:id="@+id/login_button"
+                android:textSize="18sp"
+                android:text="Login"
                 app:cornerRadius = "30dp"/>
-
             <TextView
                 android:id="@+id/toSignup"
                 android:layout_width="wrap_content"

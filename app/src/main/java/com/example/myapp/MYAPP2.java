@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,12 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MYAPP2 extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText conPass;
     Button sign;
     TextView toLogin;
+    private FirebaseAuth mAuth;
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
@@ -57,16 +64,53 @@ public class MYAPP2 extends AppCompatActivity {
                 else{
                     if(isValidEmail(Email)){
                         if (Password.equals(ConPassword)){
-                            boolean res = db.insertData(Email, Password);
-                            if (res) {
-                                username.setText("");
-                                password.setText("");
-                                conPass.setText("");
-                                Toast.makeText(MYAPP2.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MYAPP2.this, "Unable to Create User", Toast.LENGTH_SHORT).show();
-                            }
+                            mAuth=FirebaseAuth.getInstance();
+                            mAuth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        username.setText("");
+                                        password.setText("");
+                                        conPass.setText("");
+                                        Toast.makeText(MYAPP2.this, "User Created in FIreAuth Successfully", Toast.LENGTH_SHORT).show();
 
+                                    }
+                                    else{
+                                        Toast.makeText(MYAPP2.this, "Something Went Wrong5dtx", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+//                            boolean res1=db.checkEmail(Email);
+//                            if(res1){
+//                                Toast.makeText(MYAPP2.this, "User Already Exists", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                            else {
+//                                boolean res = db.insertData(Email, Password);
+//                                if (res) {
+//                                    username.setText("");
+//                                    password.setText("");
+//                                    conPass.setText("");
+//                                    mAuth=FirebaseAuth.getInstance();
+//                                    mAuth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                                            if(task.isSuccessful()){
+//                                                Toast.makeText(MYAPP2.this, "User Created in FIreAuth Successfully", Toast.LENGTH_SHORT).show();
+//
+//                                            }
+//                                            else{
+//                                                Toast.makeText(MYAPP2.this, "Something Went Wrong5dtx", Toast.LENGTH_SHORT).show();
+//
+//                                            }
+//                                        }
+//                                    });
+//                                    Toast.makeText(MYAPP2.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(MYAPP2.this, "Unable to Create User", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
                         }
                         else{
                             Toast.makeText(MYAPP2.this, "Confirm Passowrd not match", Toast.LENGTH_SHORT).show();

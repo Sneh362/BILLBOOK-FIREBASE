@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MoneyHolder> {
@@ -36,21 +39,21 @@ public class MyAdapter extends RecyclerView.Adapter<MoneyHolder> {
         this.context=context;
     }
 
-
+    public void updateData(List<HashMap<String, String>> moneyList) {
+        this.moneyList = moneyList;
+        notifyDataSetChanged();
+    }
     public void deleteItem(int position) {
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Income");
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setMessage("Are you Sure to delete? ")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // get the id of the data at the position
-                        String id = moneyList.get(position).get("id");
-
-                        // delete the data from the database
-                        dbHelper.deleteExpenses(id);
-                        homePage.updateTotal();
-                        // remove the data from the list
+                        String id = moneyList.get(position).get("task_id");
+                        myRef.child(id).removeValue();
+                        homePage.update();
                         moneyList.remove(position);
                         notifyItemRemoved(position);
 
@@ -80,7 +83,8 @@ public class MyAdapter extends RecyclerView.Adapter<MoneyHolder> {
         // create the dialog
         final Dialog dialog = new Dialog(homePage);
         dialog.setContentView(R.layout.dialog_edit);
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Income");
         // get the EditText views from the dialog
         final EditText amountEditText = dialog.findViewById(R.id.edit_amount);
         final EditText descriptionEditText = dialog.findViewById(R.id.edit_description);
@@ -98,20 +102,15 @@ public class MyAdapter extends RecyclerView.Adapter<MoneyHolder> {
                 String newAmount = amountEditText.getText().toString();
                 String newDescription = descriptionEditText.getText().toString();
 
-                dbHelper.editExpenses(money.get("id"),Integer.parseInt(newAmount),newDescription);
-                // update the item in the database
-//                SQLiteDatabase db = dbHelper.getWritableDatabase();
-//                ContentValues values = new ContentValues();
-//                values.put("amount", newAmount);
-//                values.put("purpose", newDescription);
-//                db.update("billbook", values, "_id = ?", new String[] { money.get("id") });
-//                db.close();
-
-                // update the data in the adapter and notify the RecyclerView
+                String id = money.get("task_id");
+                System.out.println(id);
+                DatabaseReference taskRef = myRef.child(id);
+                taskRef.child("money").setValue(Integer.parseInt(newAmount));
+                taskRef.child("source").setValue(newDescription);
                 money.put("amount", newAmount);
                 money.put("purpose", newDescription);
                 notifyDataSetChanged();
-                homePage.updateTotal();
+               homePage.update();
                 dialog.dismiss();
             }
         });

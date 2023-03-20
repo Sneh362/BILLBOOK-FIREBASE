@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614016386131",
+    "project_id": "billbook-8c3da",
+    "storage_bucket": "billbook-8c3da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614016386131:android:b3c0aaec163b1a93f572a6",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614016386131-v46l86ho4opuh5h2oj4sgik55b3mvtmj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaSlAqHoQ2nYZRlF6pRgH6VkKLHI9TpRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614016386131-v46l86ho4opuh5h2oj4sgik55b3mvtmj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

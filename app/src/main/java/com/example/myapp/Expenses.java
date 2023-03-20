@@ -14,12 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Expenses extends AppCompatActivity {
     EditText inSource;
     EditText money;
     Button addButtofn;
     BottomNavigationView bottomNavigationView;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     @Override
     public void onBackPressed() {
         // Do nothing
@@ -34,6 +38,8 @@ public class Expenses extends AppCompatActivity {
        addButtofn=findViewById(R.id.absButton);
          bottomNavigationView =findViewById(R.id.bottom_navigator);
         bottomNavigationView.setSelectedItemId(R.id.giveMoney);
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference("Income");
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MySharedPref",MODE_PRIVATE);
         addButtofn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,15 +53,23 @@ public class Expenses extends AppCompatActivity {
                     Integer mon=Integer.parseInt(money.getText().toString());
                     mon=mon-2*mon;
                     System.out.println("djivsnu dskv  "+userId);
-                    Boolean res=db.addMoney(inSource.getText().toString(),mon,userId);
-                    if(res){
-                        inSource.setText("");
-                        money.setText("");
-                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"Something went Wrong",Toast.LENGTH_SHORT).show();
-                    }
+
+                    MoneyFire moneyFire=new MoneyFire(mon,inSource.getText().toString(),userId);
+                    Long tsLong = System.currentTimeMillis() / 1000;
+                    String ts = tsLong.toString();
+                    databaseReference.child(ts).setValue(moneyFire);
+                    inSource.setText("");
+                    money.setText("");
+                    Toast.makeText(Expenses.this, "Task Added to firebase", Toast.LENGTH_SHORT).show();
+//                    Boolean res=db.addMoney(inSource.getText().toString(),mon,userId);
+//                    if(res){
+//                        inSource.setText("");
+//                        money.setText("");
+//                        Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
+//                    }
+//                    else{
+//                        Toast.makeText(getApplicationContext(),"Something went Wrong",Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
             }
